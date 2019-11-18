@@ -77,22 +77,6 @@ public class MySQLAccess {
               .executeQuery("select " + colNames + " from " + tableName + " where " + condition + ";");
       return resultSet;
   }
-
-  public void insert(String tableName, String[] colNames, String[] values) {
-	// This will load the MySQL driver, each DB has its own driver
-      Class.forName("com.mysql.cj.jdbc.Driver");
-      
-      // Setup the connection with the DB
-      connect = DriverManager
-          .getConnection("jdbc:mysql://localhost:3306/mydb?"
-              + "user=" + user + "&password=" + passwd );
-
-      // Statements allow to issue SQL queries to the database
-      statement = connect.createStatement();
-      resultSet = statement
-              .executeQuery("select " + colNames + " from " + tableName + " where " + condition + ";");
-      return resultSet;
-  }
   
   private void writeMetaData(ResultSet resultSet) throws SQLException {
     //   Now get some metadata from the database
