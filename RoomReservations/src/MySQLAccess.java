@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.Date;
 
 public class MySQLAccess {
@@ -17,7 +18,7 @@ public class MySQLAccess {
   final private String user = "root";
   final private String passwd = "oakland";
   
-  public void readDataBase() throws Exception {
+  public void insertStudent() throws Exception {
     try {
       // This will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.cj.jdbc.Driver");
@@ -49,7 +50,7 @@ public class MySQLAccess {
           preparedStatement.executeUpdate();
 
           preparedStatement = connect
-              .prepareStatement("SELECT * from students");
+              .prepareStatement("SELECT * from EVENTS");
           resultSet = preparedStatement.executeQuery();
           writeResultSet(resultSet);
           
@@ -60,6 +61,38 @@ public class MySQLAccess {
           close();
         }
 
+  }
+  
+  public void insertEvent(String name, int orgID, int roomID, Date date, Time startTime, Time endTime, String desc) throws Exception {
+	  try {
+	      // This will load the MySQL driver, each DB has its own driver
+	      Class.forName("com.mysql.cj.jdbc.Driver");
+	      // Setup the connection with the DB
+	      connect = DriverManager
+	          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+	              + "user=" + user + "&password=" + passwd );
+	      // Statements allow to issue SQL queries to the database
+	      statement = connect.createStatement();
+	      // PreparedStatements can use variables and are more efficient
+	      preparedStatement = connect
+	    		  .prepareStatement("insert into EVENTS values (default, ?, ?, ?, ?, ?, ?, ?)");
+	          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+	          // Parameters start with 1
+	          preparedStatement.setString(1, name);
+	          preparedStatement.setInt(2, orgID);
+	          preparedStatement.setInt(3, roomID);
+	          preparedStatement.setDate(4, (java.sql.Date) date);
+	          preparedStatement.setTime(5, startTime);
+	          preparedStatement.setTime(6, endTime);
+	          preparedStatement.setString(7, desc);
+	          preparedStatement.executeUpdate();
+	          
+	          
+	        } catch (Exception e) {
+	          throw e;
+	        } finally {
+	          close();
+	        }
   }
   
   public ResultSet select(String tableName, String colNames, String condition) throws Exception{
