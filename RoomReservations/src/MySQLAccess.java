@@ -31,8 +31,11 @@ public class MySQLAccess {
       statement = connect.createStatement();
    // Result set get the result of the SQL query
       resultSet = statement
-              .executeQuery("select STUDENT_EMAIL from students where STUDENT_ID="+stuNum+";");
-      return (email == resultSet.getString("STUDENT_EMAIL"));
+              .executeQuery("select student_email from students where student_id="+stuNum+";");
+      resultSet.next();
+      boolean res = (email.contentEquals(resultSet.getString("student_email")));
+      close();
+      return res;
   }
   
   public void insertStudent() throws Exception {
