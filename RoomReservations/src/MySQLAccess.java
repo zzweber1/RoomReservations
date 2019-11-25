@@ -18,6 +18,23 @@ public class MySQLAccess {
   final private String user = "root";
   final private String passwd = "oakland";
   
+  public boolean login(String email, int stuNum) throws Exception{
+	// This will load the MySQL driver, each DB has its own driver
+      Class.forName("com.mysql.cj.jdbc.Driver");
+      
+      // Setup the connection with the DB
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+
+      // Statements allow to issue SQL queries to the database
+      statement = connect.createStatement();
+   // Result set get the result of the SQL query
+      resultSet = statement
+              .executeQuery("select STUDENT_EMAIL from students where STUDENT_ID="+stuNum+";");
+      return (email == resultSet.getString("STUDENT_EMAIL"));
+  }
+  
   public void insertStudent() throws Exception {
     try {
       // This will load the MySQL driver, each DB has its own driver
