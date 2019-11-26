@@ -35,7 +35,7 @@ public class Main {
 			submit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					MySQLAccess msa = new MySQLAccess();
-					Home p = new Home();
+					Home p = new Home(Integer.parseInt(stuField.getText()));
 					Boolean res = false;
 					try {
 					res = msa.login(emailField.getText(), Integer.parseInt(stuField.getText()));

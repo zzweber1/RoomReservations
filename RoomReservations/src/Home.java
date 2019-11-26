@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Home extends JPanel {
+		int stuNum;
+	
 		JPanel joinPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel createOrgPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel eventPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -16,7 +18,9 @@ public class Home extends JPanel {
 		JButton editEventButton = new JButton("Edit an Event");
 		JButton logoutButton = new JButton("Logout and Exit");
 		
-		public Home() {
+		public Home(int stuNumber) {
+			stuNum = stuNumber;
+			
 			joinPanel.add(joinButton);
 			createOrgPanel.add(createOrgButton);
 			eventPanel.add(eventButton);
