@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Home extends JPanel {
 		int stuNum;
@@ -20,6 +22,12 @@ public class Home extends JPanel {
 		
 		public Home(int stuNumber) {
 			stuNum = stuNumber;
+			
+			editEventButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					MySQLAccess msa = new MySQLAccess();
+				}
+			});
 			
 			joinPanel.add(joinButton);
 			createOrgPanel.add(createOrgButton);
