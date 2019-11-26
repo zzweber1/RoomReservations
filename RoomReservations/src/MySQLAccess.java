@@ -18,9 +18,15 @@ public class MySQLAccess {
   final private String user = "root";
   final private String passwd = "oakland";
   
+  /**
+   * 
+   * @param email the email the student entered
+   * @param stuNum the student number the student entered
+   * @return True if login credentials are correct otherwise false
+   * @throws Exception idk
+   */
   public boolean login(String email, int stuNum) throws Exception{
-	// This will load the MySQL driver, each DB has its own driver
-      Class.forName("com.mysql.cj.jdbc.Driver");
+      Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
       
       // Setup the connection with the DB
       connect = DriverManager
@@ -29,12 +35,12 @@ public class MySQLAccess {
 
       // Statements allow to issue SQL queries to the database
       statement = connect.createStatement();
-   // Result set get the result of the SQL query
+      // Result set get the result of the SQL query
       resultSet = statement
               .executeQuery("select student_email from students where student_id="+stuNum+";");
-      resultSet.next();
+      resultSet.next(); //This is necessary each time you get a value from the resultSet
       boolean res = (email.contentEquals(resultSet.getString("student_email")));
-      close();
+      close(); //close the conection to the database
       return res;
   }
   
