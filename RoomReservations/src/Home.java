@@ -26,6 +26,8 @@ public class Home extends JPanel {
 			editEventButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					MySQLAccess msa = new MySQLAccess();
+					EditEventFrame eef = new EditEventFrame();
+					eef.setVisible(true);
 				}
 			});
 			
