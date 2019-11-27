@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.Date;
+import java.util.ArrayList;
 
 public class MySQLAccess {
 	
@@ -47,7 +47,9 @@ public class MySQLAccess {
   
   public int[] getOrgsFromOfficer(int officerID) throws ClassNotFoundException, SQLException {
 	  int[] orgIDs;
-	  Array a;
+	  ArrayList<Integer> a = null;
+	  System.out.println("select org_id from student_orgs where president_id=" + officerID +" or vp_id=" 
+      + officerID +" or treasurer_id=" + officerID +" or secretary_id=" + officerID + ";");
 	  
 	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
       connect = DriverManager
@@ -55,11 +57,18 @@ public class MySQLAccess {
               + "user=" + user + "&password=" + passwd );
       statement = connect.createStatement();
       resultSet = statement
-              .executeQuery("select org_id from studentorgs where president_id=" + officerID +" or vp_id=" 
+              .executeQuery("select org_id from student_orgs where president_id=" + officerID +" or vp_id=" 
       + officerID +" or treasurer_id=" + officerID +" or secretary_id=" + officerID + ";");
       
-      a = resultSet.getArray("is_nullable");
-      orgIDs = (int[])a.getArray();
+      //Some spaghetti I had do in order to get the length of the resultset so I could set the length of the array
+      resultSet.afterLast();
+      resultSet.previous();
+      orgIDs = new int[resultSet.getRow()];
+      resultSet.beforeFirst();
+      for(int i = 0; i < 2; i++) {
+    	  resultSet.next();
+    	  orgIDs[i] = resultSet.getInt("org_id");
+      }
       
       close();
       return orgIDs;
