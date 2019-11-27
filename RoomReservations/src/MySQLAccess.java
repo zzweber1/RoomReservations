@@ -1,3 +1,4 @@
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -42,6 +43,26 @@ public class MySQLAccess {
       boolean res = (email.contentEquals(resultSet.getString("student_email")));
       close(); //close the conection to the database
       return res;
+  }
+  
+  public int[] getOrgsFromOfficer(int officerID) throws ClassNotFoundException, SQLException {
+	  int[] orgIDs;
+	  Array a;
+	  
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+      statement = connect.createStatement();
+      resultSet = statement
+              .executeQuery("select org_id from studentorgs where president_id=" + officerID +" or vp_id=" 
+      + officerID +" or treasurer_id=" + officerID +" or secretary_id=" + officerID + ";");
+      
+      a = resultSet.getArray("is_nullable");
+      orgIDs = (int[])a.getArray();
+      
+      close();
+      return orgIDs;
   }
   
   public void insertStudent() throws Exception {
