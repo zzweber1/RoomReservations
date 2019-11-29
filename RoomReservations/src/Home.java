@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Home extends JPanel {
 		int stuNum;
@@ -26,7 +28,25 @@ public class Home extends JPanel {
 			editEventButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					MySQLAccess msa = new MySQLAccess();
-					EditEventFrame eef = new EditEventFrame();
+					int[] orgIDs = null;
+					try {
+						orgIDs = msa.getOrgsFromOfficer(stuNum);
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					ArrayList<Event> events = new ArrayList<Event>();
+					for(int i = 0; i < orgIDs.length; i++) {
+						try{
+							events.addAll(msa.getEventFromOrgID(orgIDs[i]));
+						} catch (Exception e1) {
+							System.out.println(e1.getMessage());
+						}
+					}
+					EditEventFrame eef = new EditEventFrame(events);
 					eef.setVisible(true);
 				}
 			});

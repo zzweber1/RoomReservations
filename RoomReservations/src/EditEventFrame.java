@@ -1,4 +1,5 @@
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -10,15 +11,12 @@ public class EditEventFrame extends JFrame{
 	
 	JLabel test;
 	
-	public EditEventFrame() {
+	public EditEventFrame(ArrayList<Event> e) {
 		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		setSize(50, 100);
-		mainPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		setSize(600, 800);
 		
-		test = new JLabel("Hello");
-		
-		mainPanel.add(test);
-		
-		add(mainPanel);
+		for(int i = 0; i < e.size(); i++) {
+			add(e.get(i).getJPanel());
+		}
 	}
 }

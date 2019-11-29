@@ -80,7 +80,7 @@ public class MySQLAccess {
    * @throws SQLException
    * @throws ClassNotFoundException
    */
-  public Event[] getEventFromOrgID(int orgID) throws SQLException, ClassNotFoundException {
+  public ArrayList<Event> getEventFromOrgID(int orgID) throws SQLException, ClassNotFoundException {
 	  ArrayList<Event> events = new ArrayList<Event>();
 	  
 	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
@@ -89,14 +89,36 @@ public class MySQLAccess {
               + "user=" + user + "&password=" + passwd );
       statement = connect.createStatement();
       resultSet = statement
-              .executeQuery("select * from events where orgID=" + orgID + ";");
+              .executeQuery("select * from events where org_id=" + orgID + ";");
       while(resultSet.next()) {
+    	  
     	  events.add(new Event(resultSet.getInt("event_id"), resultSet.getString("event_name"), resultSet.getInt("org_id"),
     			  resultSet.getInt("room_id"), resultSet.getDate("event_date"), resultSet.getTime("event_start_time"),
-    			  resultSet.getTime("event_end_time"), resultSet.getString("event_description")));
+    			  resultSet.getTime("evetn_end_time"), resultSet.getString("event_description")));
       }
 	  
-	  return (Event[]) events.toArray();
+	  return events;
+  }
+  
+  public void updateEvent(int ID, String name, int roomID, Date date, Time start, Time end, String desc) throws SQLException, ClassNotFoundException {
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+
+      statement = connect.createStatement();
+      preparedStatement = connect
+    		  .prepareStatement("update EVENTS set event_name=?, room_id=?,  event_date=?, event_start_time=?, evetn_end_time=?,"
+    		  		+ " event_description=? where org_id=" + ID + ";");
+          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+          // Parameters start with 1
+          preparedStatement.setString(1, name);
+          preparedStatement.setInt(2, roomID);
+          preparedStatement.setDate(3, (java.sql.Date) date);
+          preparedStatement.setTime(4, start);
+          preparedStatement.setTime(5, end);
+          preparedStatement.setString(6, desc);
+          preparedStatement.executeUpdate();
   }
   
   
