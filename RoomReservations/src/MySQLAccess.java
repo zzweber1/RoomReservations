@@ -48,8 +48,6 @@ public class MySQLAccess {
   public int[] getOrgsFromOfficer(int officerID) throws ClassNotFoundException, SQLException {
 	  int[] orgIDs;
 	  ArrayList<Integer> a = null;
-	  System.out.println("select org_id from student_orgs where president_id=" + officerID +" or vp_id=" 
-      + officerID +" or treasurer_id=" + officerID +" or secretary_id=" + officerID + ";");
 	  
 	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
       connect = DriverManager
@@ -74,8 +72,29 @@ public class MySQLAccess {
       return orgIDs;
   }
   
-  public Event[] getEventfromOrdID() {
+  /**
+   * Gets an array of Event objects for a student org with the org's id
+   * 
+   * @param orgID
+   * @return An array of event objects
+   * @throws SQLException
+   * @throws ClassNotFoundException
+   */
+  public Event[] getEventfromOrgID(int orgID) throws SQLException, ClassNotFoundException {
 	  ArrayList<Event> events = new ArrayList();
+	  
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+      statement = connect.createStatement();
+      resultSet = statement
+              .executeQuery("select * from events where orgID=" + orgID + ";");
+      while(resultSet.next()) {
+    	  events.add(new Event(resultSet.getInt("event_id"), resultSet.getString("event_name"), resultSet.getInt("org_id"),
+    			  resultSet.getInt("room_id"), resultSet.getDate("event_date"), resultSet.getTime("event_start_time"),
+    			  resultSet.getTime("event_end_time"), resultSet.getString("event_description")));
+      }
 	  
 	  return (Event[]) events.toArray();
   }
