@@ -127,6 +127,22 @@ public class Event {
 				}
 			}
 		});
+		JDel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MySQLAccess msa = new MySQLAccess();
+				try {
+					msa.deleteEvent(eventID);
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
 		buttons.add(JEdit);
 		buttons.add(JDel);
 		south.add(buttons);

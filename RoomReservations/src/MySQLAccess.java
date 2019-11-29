@@ -121,6 +121,18 @@ public class MySQLAccess {
           preparedStatement.executeUpdate();
   }
   
+  public void deleteEvent(int ID) throws ClassNotFoundException, SQLException {
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+
+      statement = connect.createStatement();
+      preparedStatement = connect
+    		  .prepareStatement("delete from events where event_id=" + ID + ";");
+      preparedStatement.execute();
+  }
+  
   
   public void insertStudent() throws Exception {
     try {
@@ -166,6 +178,7 @@ public class MySQLAccess {
         }
 
   }
+  
   
   public void insertEvent(String name, int orgID, int roomID, Date date, Time startTime, Time endTime, String desc) throws Exception {
 	  try {

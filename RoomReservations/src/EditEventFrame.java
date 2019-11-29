@@ -13,7 +13,7 @@ public class EditEventFrame extends JFrame{
 	
 	public EditEventFrame(ArrayList<Event> e) {
 		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		setSize(600, 800);
+		setSize(600, 200 * e.size());
 		
 		for(int i = 0; i < e.size(); i++) {
 			add(e.get(i).getJPanel());
