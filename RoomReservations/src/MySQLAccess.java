@@ -80,8 +80,8 @@ public class MySQLAccess {
    * @throws SQLException
    * @throws ClassNotFoundException
    */
-  public Event[] getEventfromOrgID(int orgID) throws SQLException, ClassNotFoundException {
-	  ArrayList<Event> events = new ArrayList();
+  public Event[] getEventFromOrgID(int orgID) throws SQLException, ClassNotFoundException {
+	  ArrayList<Event> events = new ArrayList<Event>();
 	  
 	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
       connect = DriverManager
