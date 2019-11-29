@@ -40,7 +40,7 @@ public class Home extends JPanel {
 					}
 					ArrayList<Event> events = new ArrayList<Event>();
 					for(int i = 0; i < orgIDs.length; i++) {
-						try{
+						try {
 							events.addAll(msa.getEventFromOrgID(orgIDs[i]));
 						} catch (Exception e1) {
 							System.out.println(e1.getMessage());
