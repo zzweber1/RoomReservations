@@ -65,14 +65,21 @@ public class MySQLAccess {
       resultSet.previous();
       orgIDs = new int[resultSet.getRow()];
       resultSet.beforeFirst();
-      for(int i = 0; i < 2; i++) {
+      for(int i = 0; i < orgIDs.length; i++) {
     	  resultSet.next();
     	  orgIDs[i] = resultSet.getInt("org_id");
       }
-      
+     
       close();
       return orgIDs;
   }
+  
+  public Event[] getEventfromOrdID() {
+	  ArrayList<Event> events = new ArrayList();
+	  
+	  return (Event[]) events.toArray();
+  }
+  
   
   public void insertStudent() throws Exception {
     try {
