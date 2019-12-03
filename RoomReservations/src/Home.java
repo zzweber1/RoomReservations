@@ -34,8 +34,8 @@ public class Home extends JPanel {
 			
 			createOrgButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
+					StudentOrg stuorg = new StudentOrg();
+					stuorg.setVisible(true);
 				}
 			});
 			

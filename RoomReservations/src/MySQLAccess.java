@@ -236,7 +236,7 @@ public class MySQLAccess {
 	  }
   }
   
-  public void insertOrg(int orgID, String name, String desc, int presID, int vpID, int tresID, int secID) throws Exception {
+  public void insertOrg(String name, String desc, int presID, int vpID, int tresID, int secID) throws Exception {
 	  try {
 		// This will load the MySQL driver, each DB has its own driver
 	      Class.forName("com.mysql.cj.jdbc.Driver");
