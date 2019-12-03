@@ -203,13 +203,68 @@ public class MySQLAccess {
 	          preparedStatement.setTime(6, endTime);
 	          preparedStatement.setString(7, desc);
 	          preparedStatement.executeUpdate();
-	          
-	          
 	        } catch (Exception e) {
 	          throw e;
 	        } finally {
 	          close();
 	        }
+  }
+  
+  public void insertMembership(int stuID, int orgID) throws Exception {
+	 long calendar = System.currentTimeMillis();
+	 java.sql.Date addDate = new java.sql.Date(calendar);
+	  try {
+		// This will load the MySQL driver, each DB has its own driver
+	      Class.forName("com.mysql.cj.jdbc.Driver");
+	      // Setup the connection with the DB
+	      connect = DriverManager
+	          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+	              + "user=" + user + "&password=" + passwd );
+	      // Statements allow to issue SQL queries to the database
+	      statement = connect.createStatement();
+	      // PreparedStatements can use variables and are more efficient
+	      preparedStatement = connect
+	    		  .prepareStatement("insert into MEMBERSHIP values (?, ?, addDate");
+	          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+	          // Parameters start with 1
+	          preparedStatement.setInt(1, stuID);
+	          preparedStatement.setInt(2, orgID);
+	          //preparedStatement.setDate(3, (java.sql.Date) date);
+	          preparedStatement.executeUpdate();
+	  } catch (Exception e) {
+		  throw e;
+	  } finally {
+		  close();
+	  }
+  }
+  
+  public void insertOrg(String name, String desc, int presID, int vpID, int tresID, int secID) throws Exception {
+	  try {
+		// This will load the MySQL driver, each DB has its own driver
+	      Class.forName("com.mysql.cj.jdbc.Driver");
+	      // Setup the connection with the DB
+	      connect = DriverManager
+	          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+	              + "user=" + user + "&password=" + passwd );
+	      // Statements allow to issue SQL queries to the database
+	      statement = connect.createStatement();
+	      // PreparedStatements can use variables and are more efficient
+	      preparedStatement = connect
+	    		  .prepareStatement("insert into STUDENT_ORGS values (default, ?, ?, ?, ?, ?, ?)");
+	          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
+	          // Parameters start with 1
+	          preparedStatement.setString(1, name);
+	          preparedStatement.setString(2, desc);
+	          preparedStatement.setInt(3, presID);
+	          preparedStatement.setInt(4, vpID);
+	          preparedStatement.setInt(5, tresID);
+	          preparedStatement.setInt(6, secID);
+	          preparedStatement.executeUpdate();
+	  } catch (Exception e) {
+		  
+	  } finally {
+		  close();
+	  }
   }
   
   public ResultSet select(String tableName, String colNames, String condition) throws Exception{
