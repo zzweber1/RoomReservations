@@ -61,6 +61,7 @@ public class CreateEventFrame extends JFrame{
 		cef.setVisible(true);
 	}
 	
+<<<<<<< HEAD
 	public JPanel getJPanel2() {
 		JPanel p = new JPanel(new BorderLayout());
 		p.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -136,4 +137,6 @@ public class CreateEventFrame extends JFrame{
 
 	}
 	
+=======
+>>>>>>> branch 'master' of https://github.com/zzweber1/RoomReservations.git
 }
