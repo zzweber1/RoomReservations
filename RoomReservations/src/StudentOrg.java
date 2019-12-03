@@ -8,7 +8,7 @@ public class StudentOrg extends JFrame {
 
 	public StudentOrg (){
 		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		setSize(300, 300);
+		setSize(340, 500);
 		
 		JPanel north = new JPanel(new FlowLayout());
 		JPanel west = new JPanel(new FlowLayout());
@@ -36,6 +36,8 @@ public class StudentOrg extends JFrame {
 		JLabel jsecID = new JLabel("Secretary's student ID: ");
 		JTextField jsecIDinput = new JTextField();
 		
+		jnameinput.setColumns(10);
+		jdescinput.setColumns(20);
 		jpresIDinput.setColumns(5);
 		jvpIDinput.setColumns(5);
 		jtresIDinput.setColumns(5);

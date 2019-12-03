@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Main {
-	public static void main(String args[]) throws Exception{
+	public static void main(String args[]) throws Exception{		
 		JFrame frame = new JFrame("Student Organization Event Manager");
 		frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -22,7 +22,7 @@ public class Main {
 		JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel stuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel submitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-
+		
 
 		JLabel email = new JLabel("Email:");
 		JTextField emailField = new JTextField();

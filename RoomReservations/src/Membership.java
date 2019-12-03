@@ -33,7 +33,7 @@ public class Membership extends JFrame{
 		
 		west.add(jorgid);
 		west.add(jorgidinput);
-		west.add(jmonth);
+		//west.add(jmonth);
 		
 		/*west.add(jmonthinput);
 		west.add(jday);
