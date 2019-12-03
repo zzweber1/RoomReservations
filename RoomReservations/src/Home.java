@@ -51,6 +51,14 @@ public class Home extends JPanel {
 				}
 			});
 			
+			createEventButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					CreateEventFrame cef = new CreateEventFrame();
+
+			
+				}
+			});
+			
 			joinPanel.add(joinButton);
 			createOrgPanel.add(createOrgButton);
 			eventPanel.add(eventButton);
