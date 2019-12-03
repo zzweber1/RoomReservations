@@ -61,7 +61,7 @@ public class CreateEventFrame extends JFrame{
 		cef.setVisible(true);
 	}
 	
-	public JPanel getJPanel() {
+	public JPanel getJPanel2() {
 		JPanel p = new JPanel(new BorderLayout());
 		p.setBorder(new EmptyBorder(10, 10, 10, 10));
 		JPanel north= new JPanel();
@@ -80,11 +80,11 @@ public class CreateEventFrame extends JFrame{
 		north.add(jtitle);
 		north.add(jroom);
 		
-		JTextField jmonth = new JTextField(Integer.toString(date.getMonth()));
+		JTextField jmonth = new JTextField("Month");
 		JLabel div = new JLabel(" / ");
-		JTextField jday = new JTextField(Integer.toString(date.getDay()));
+		JTextField jday = new JTextField("Day");
 		JLabel div2 = new JLabel(" / ");
-		JTextField jyear = new JTextField(Integer.toString(date.getYear()));
+		JTextField jyear = new JTextField("Year");
 		jmonth.setColumns(2);
 		jday.setColumns(2);
 		jyear.setColumns(5);
@@ -96,9 +96,9 @@ public class CreateEventFrame extends JFrame{
 		
 		
 		JLabel jstart = new JLabel("Start: ");
-		JTextField jshour = new JTextField(Integer.toString(start.getHours()));
+		JTextField jshour = new JTextField("Hour");
 		JLabel colon = new JLabel(":");
-		JTextField jsmin = new JTextField(Integer.toString(start.getMinutes()));
+		JTextField jsmin = new JTextField("Minutes");
 		jshour.setColumns(2);
 		jsmin.setColumns(2);
 		cent.add(jstart);
@@ -107,9 +107,9 @@ public class CreateEventFrame extends JFrame{
 		cent.add(jsmin);
 		
 		JLabel jend = new JLabel("End: ");
-		JTextField jehour = new JTextField(Integer.toString(end.getHours()));
+		JTextField jehour = new JTextField("Hour");
 		JLabel colon2 = new JLabel(":");
-		JTextField jemin = new JTextField(Integer.toString(end.getMinutes()));
+		JTextField jemin = new JTextField("Minutes");
 		jehour.setColumns(2);
 		jemin.setColumns(2);
 		east.add(jend);
@@ -123,42 +123,7 @@ public class CreateEventFrame extends JFrame{
 		sep.setBorder(new EmptyBorder(1, 1, 1, 1));
 		south.add(jdesc);
 		
-		JButton JEdit = new JButton("Edit");
-		JButton JDel = new JButton("Delete");
-		JEdit.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			public void actionPerformed(ActionEvent e) {
-				MySQLAccess msa = new MySQLAccess();
-				try {
-					msa.updateEvent(eventID, jtitle.getText(), Integer.parseInt(jroom.getText()),
-							new Date(Integer.parseInt(jyear.getText()), Integer.parseInt(jmonth.getText()), Integer.parseInt(jday.getText())),
-									new Time(Integer.parseInt(jshour.getText()), Integer.parseInt(jsmin.getText()), 0),
-									new Time(Integer.parseInt(jehour.getText()), Integer.parseInt(jemin.getText()), 0), jdesc.getText());
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		});
-		JDel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MySQLAccess msa = new MySQLAccess();
-				try {
-					msa.deleteEvent(eventID);
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		});
-		buttons.add(JEdit);
-		buttons.add(JDel);
-		south.add(buttons);
+		
 		south.add(sep);
 		
 		p.add(north, BorderLayout.NORTH);
@@ -168,6 +133,7 @@ public class CreateEventFrame extends JFrame{
 		p.add(south, BorderLayout.SOUTH);
 		
 		return p;
+
 	}
 	
 }
