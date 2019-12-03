@@ -55,7 +55,9 @@ public class Home extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					CreateEventFrame cef = new CreateEventFrame();
 
-			
+					
+					
+					cef.setVisible(true);
 				}
 			});
 			
