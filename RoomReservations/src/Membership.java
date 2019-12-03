@@ -20,20 +20,26 @@ public class Membership extends JFrame{
 		JLabel jorgid = new JLabel("Student Organization ID: ");
 		JTextField jorgidinput = new JTextField();
 		JLabel jmonth = new JLabel("Month joined: ");
-		JTextField jmonthinput = new JTextField();
+		
+		/*JTextField jmonthinput = new JTextField();
 		JLabel jday = new JLabel("Day joined: ");
 		JTextField jdayinput = new JTextField();
 		JLabel jyear = new JLabel("Year joined: ");
-		JTextField jyearinput = new JTextField();
+		JTextField jyearinput = new JTextField(); */
+		
+		jorgidinput.setColumns(5);
+		jorgidinput.setColumns(5);
+		
 		
 		west.add(jorgid);
 		west.add(jorgidinput);
 		west.add(jmonth);
-		west.add(jmonthinput);
+		
+		/*west.add(jmonthinput);
 		west.add(jday);
 		west.add(jdayinput);
 		west.add(jyear);
-		west.add(jyearinput);
+		west.add(jyearinput);*/
 		
 		JButton JSubmit = new JButton("Submit");
 		JSubmit.addActionListener(new ActionListener() {
@@ -41,7 +47,7 @@ public class Membership extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				MySQLAccess msa = new MySQLAccess();
 				try {
-					msa.insertMembership(stuID, Integer.parseInt(jorgidinput.getText()), new Date(Integer.parseInt(jyearinput.getText()), Integer.parseInt(jmonthinput.getText()), Integer.parseInt(jdayinput.getText())));
+					msa.insertMembership(stuID, Integer.parseInt(jorgidinput.getText()));
 					
 				} catch (Exception ex) {	
 				}

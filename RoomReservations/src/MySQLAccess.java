@@ -210,7 +210,9 @@ public class MySQLAccess {
 	        }
   }
   
-  public void insertMembership(int stuID, int orgID, Date date) throws Exception {
+  public void insertMembership(int stuID, int orgID) throws Exception {
+	 long calendar = System.currentTimeMillis();
+	 java.sql.Date addDate = new java.sql.Date(calendar);
 	  try {
 		// This will load the MySQL driver, each DB has its own driver
 	      Class.forName("com.mysql.cj.jdbc.Driver");
@@ -222,12 +224,12 @@ public class MySQLAccess {
 	      statement = connect.createStatement();
 	      // PreparedStatements can use variables and are more efficient
 	      preparedStatement = connect
-	    		  .prepareStatement("insert into MEMBERSHIP values (?, ?, ?)");
+	    		  .prepareStatement("insert into MEMBERSHIP values (?, ?, addDate");
 	          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
 	          // Parameters start with 1
 	          preparedStatement.setInt(1, stuID);
 	          preparedStatement.setInt(2, orgID);
-	          preparedStatement.setDate(3, (java.sql.Date) date);
+	          //preparedStatement.setDate(3, (java.sql.Date) date);
 	          preparedStatement.executeUpdate();
 	  } catch (Exception e) {
 		  throw e;

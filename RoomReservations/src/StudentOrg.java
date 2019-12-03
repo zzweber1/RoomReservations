@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.Date;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class StudentOrg extends JFrame {
 
@@ -19,8 +20,13 @@ public class StudentOrg extends JFrame {
 		//this is all of the input, w
 		JLabel jname = new JLabel("Student organization name: ");
 		JTextField jnameinput = new JTextField();
+		
 		JLabel jdesc = new JLabel("Description: ");
 		JTextField jdescinput = new JTextField();
+		jdescinput.setBorder(new EmptyBorder(5, 5, 5, 5));
+		JSeparator sep = new JSeparator();
+		sep.setBorder(new EmptyBorder(1, 1, 1, 1));
+		
 		JLabel jpresID = new JLabel("President's student ID: ");
 		JTextField jpresIDinput = new JTextField();
 		JLabel jvpID = new JLabel("Vice President's student ID: ");
@@ -29,6 +35,12 @@ public class StudentOrg extends JFrame {
 		JTextField jtresIDinput = new JTextField();
 		JLabel jsecID = new JLabel("Secretary's student ID: ");
 		JTextField jsecIDinput = new JTextField();
+		
+		jpresIDinput.setColumns(5);
+		jvpIDinput.setColumns(5);
+		jtresIDinput.setColumns(5);
+		jsecIDinput.setColumns(5);
+		
 		
 		west.add(jname);
 		west.add(jnameinput);
