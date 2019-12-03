@@ -25,20 +25,6 @@ public class Home extends JPanel {
 		public Home(int stuNumber) {
 			stuNum = stuNumber;
 			
-			joinButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Membership memship = new Membership(stuNum);
-					memship.setVisible(true);
-				}
-			});
-			
-			createOrgButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-					
-				}
-			});
-			
 			editEventButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					MySQLAccess msa = new MySQLAccess();
