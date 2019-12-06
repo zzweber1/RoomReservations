@@ -39,6 +39,32 @@ public class Home extends JPanel {
 				}
 			});
 			
+			eventButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+						MySQLAccess msa = new MySQLAccess();
+						int[] orgIDs = null;
+						try {
+							orgIDs = msa.getOrgsFromMem(stuNum);
+						} catch (ClassNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						ArrayList<Event> events = new ArrayList<Event>();
+						for(int i = 0; i < orgIDs.length; i++) {
+							try {
+								events.addAll(msa.getEventFromOrgID(orgIDs[i]));
+							} catch (Exception e1) {
+								System.out.println(e1.getMessage());
+							}
+						}
+						eventFrame eef = new eventFrame(events, stuNum);
+						eef.setVisible(true);
+					}
+			});
+			
 			editEventButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					MySQLAccess msa = new MySQLAccess();

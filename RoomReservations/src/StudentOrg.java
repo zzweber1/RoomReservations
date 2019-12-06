@@ -14,7 +14,7 @@ public class StudentOrg extends JFrame {
 		JPanel west = new JPanel(new FlowLayout());
 		JPanel south = new JPanel();
 		
-		JTextField jtitle = new JTextField("Create a Student Organization");
+		JLabel jtitle = new JLabel("Create a Student Organization");
 		north.add(jtitle);
 		
 		//this is all of the input, w
@@ -63,9 +63,11 @@ public class StudentOrg extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MySQLAccess msa = new MySQLAccess();
 				try {
+					System.out.print("Submit");
 					msa.insertOrg(jname.getText(), jdesc.getText(), Integer.parseInt(jpresIDinput.getText()), Integer.parseInt(jvpIDinput.getText()), 
 							Integer.parseInt(jtresIDinput.getText()),Integer.parseInt(jsecIDinput.getText()));
 				} catch (Exception ex) {	
+					System.out.println(ex.getMessage());
 				}
 			}
 		});

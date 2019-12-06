@@ -156,4 +156,69 @@ public class Event {
 		
 		return p;
 	}
+	
+	public JPanel getUpcoming(int stuNum) throws ClassNotFoundException, SQLException {
+		MySQLAccess msa = new MySQLAccess();
+		
+		JPanel p = new JPanel(new BorderLayout());
+		p.setBorder(new EmptyBorder(10, 10, 10, 10));
+		JPanel north= new JPanel();
+		north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
+		JPanel west = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel cent = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel east = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel south = new JPanel();
+		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
+		JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		west.setMaximumSize(new Dimension(100, 200));
+		cent.setMaximumSize(new Dimension(100, 200));
+		east.setMaximumSize(new Dimension(100, 200));
+		
+		JLabel jtitle = new JLabel(name);
+		JLabel jroom = new JLabel(Integer.toString(roomID));
+		north.add(jtitle);
+		north.add(jroom);
+		
+		JLabel jdate = new JLabel("Date : " + date.getMonth() + "/" + date.getDay() + "/" + date.getYear());
+		west.add(jdate);
+		
+		JLabel jstart = new JLabel("Starts: " + start.getHours() + ":" + start.getMinutes());
+		cent.add(jstart);
+		
+		JLabel jend = new JLabel("End: " + end.getHours() + ":" + end.getMinutes());
+		east.add(jend);
+		
+		JTextArea jdesc = new JTextArea(desc);
+		jdesc.disable();
+		jdesc.setBorder(new EmptyBorder(5, 5, 5, 5));
+		JSeparator sep = new JSeparator();
+		sep.setBorder(new EmptyBorder(1, 1, 1, 1));
+		south.add(jdesc);
+		
+		final JButton RSVP = new JButton(msa.getRSVP(stuNum, eventID));
+
+		RSVP.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				try {
+					msa.toggleRSVP(stuNum, eventID);
+					RSVP.setText(msa.getRSVP(stuNum, eventID));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		buttons.add(RSVP);
+		south.add(buttons);
+		south.add(sep);
+		
+		p.add(north, BorderLayout.NORTH);
+		p.add(east, BorderLayout.EAST);
+		p.add(cent, BorderLayout.CENTER);
+		p.add(west, BorderLayout.WEST);
+		p.add(south, BorderLayout.SOUTH);
+		
+		return p;
+	}
 }

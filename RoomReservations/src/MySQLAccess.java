@@ -40,9 +40,15 @@ public class MySQLAccess {
       resultSet = statement
               .executeQuery("select student_email from students where student_id="+stuNum+";");
       resultSet.next(); //This is necessary each time you get a value from the resultSet
-      boolean res = (email.contentEquals(resultSet.getString("student_email")));
-      close(); //close the conection to the database
-      return res;
+      try {
+      	boolean res = (email.contentEquals(resultSet.getString("student_email")));
+        close(); //close the conection to the database
+        return res;
+      }catch(Exception e) {
+    	  close();
+    	  return false;
+      }
+
   }
   
   public int[] getOrgsFromOfficer(int officerID) throws ClassNotFoundException, SQLException {
@@ -57,6 +63,32 @@ public class MySQLAccess {
       resultSet = statement
               .executeQuery("select org_id from student_orgs where president_id=" + officerID +" or vp_id=" 
       + officerID +" or treasurer_id=" + officerID +" or secretary_id=" + officerID + ";");
+      
+      //Some spaghetti I had do in order to get the length of the resultset so I could set the length of the array
+      resultSet.afterLast();
+      resultSet.previous();
+      orgIDs = new int[resultSet.getRow()];
+      resultSet.beforeFirst();
+      for(int i = 0; i < orgIDs.length; i++) {
+    	  resultSet.next();
+    	  orgIDs[i] = resultSet.getInt("org_id");
+      }
+     
+      close();
+      return orgIDs;
+  }
+  
+  public int[] getOrgsFromMem(int ID) throws ClassNotFoundException, SQLException {
+	  int[] orgIDs;
+	  ArrayList<Integer> a = null;
+	  
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+      statement = connect.createStatement();
+      resultSet = statement
+              .executeQuery("select org_id from membership where student_id=" + ID + ";");
       
       //Some spaghetti I had do in order to get the length of the resultset so I could set the length of the array
       resultSet.afterLast();
@@ -109,7 +141,7 @@ public class MySQLAccess {
       statement = connect.createStatement();
       preparedStatement = connect
     		  .prepareStatement("update EVENTS set event_name=?, room_id=?,  event_date=?, event_start_time=?, evetn_end_time=?,"
-    		  		+ " event_description=? where org_id=" + ID + ";");
+    		  		+ " event_description=? where event_id=" + ID + ";");
           // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
           // Parameters start with 1
           preparedStatement.setString(1, name);
@@ -131,6 +163,52 @@ public class MySQLAccess {
       preparedStatement = connect
     		  .prepareStatement("delete from events where event_id=" + ID + ";");
       preparedStatement.execute();
+  }
+  public String getRSVP(int studentID, int eventID) throws ClassNotFoundException, SQLException {
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+      statement = connect.createStatement();
+      resultSet = statement
+              .executeQuery("select RSVP_RESPONSE from rsvp where event_id='" + eventID + "' and student_id='" + studentID + "';");
+      
+      resultSet.next();
+      try {
+    	  int res = resultSet.getInt("RSVP_RESPONSE");
+    	  if(res == 0) {
+    		  return "RSVP";
+    	  }else {
+    		  return "unRSVP";
+    	  }
+      }catch(Exception SQLException) {
+    	  preparedStatement = connect
+        		  .prepareStatement("insert into rsvp values(" + eventID + ", " + studentID + ", 0);");
+          preparedStatement.execute();
+          return "RSVP";
+      }
+  }
+  
+  public void toggleRSVP(int studentID, int eventID) throws ClassNotFoundException, SQLException {
+	  Class.forName("com.mysql.cj.jdbc.Driver"); // This will load the MySQL driver, each DB has its own driver
+      connect = DriverManager
+          .getConnection("jdbc:mysql://localhost:3306/mydb?"
+              + "user=" + user + "&password=" + passwd );
+      statement = connect.createStatement();
+      resultSet = statement
+              .executeQuery("select RSVP_RESPONSE from rsvp where event_id='" + eventID + "' and student_id='" + studentID + "';");
+      
+      resultSet.next();
+      int res = resultSet.getInt("RSVP_RESPONSE");
+      if(res == 0) {
+    	  res = 1;
+      }else {
+    	  res = 0;
+      }
+      preparedStatement = connect
+    		  .prepareStatement("update rsvp set RSVP_RESPONSE=" + res + " where event_id='" + eventID + "' and student_id='" + studentID + "';");
+      preparedStatement.execute();
+      close();
   }
   
   
@@ -224,12 +302,12 @@ public class MySQLAccess {
 	      statement = connect.createStatement();
 	      // PreparedStatements can use variables and are more efficient
 	      preparedStatement = connect
-	    		  .prepareStatement("insert into MEMBERSHIP values (?, ?, addDate");
+	    		  .prepareStatement("insert into MEMBERSHIP values (?, ?, ?);");
 	          // "myuser, webpage, datum, summary, COMMENTS from feedback.comments");
 	          // Parameters start with 1
 	          preparedStatement.setInt(1, stuID);
 	          preparedStatement.setInt(2, orgID);
-	          //preparedStatement.setDate(3, (java.sql.Date) date);
+	          preparedStatement.setDate(3, addDate);
 	          preparedStatement.executeUpdate();
 	  } catch (Exception e) {
 		  throw e;
@@ -267,6 +345,8 @@ public class MySQLAccess {
 	  }
   }
   
+
+  
   public ResultSet select(String tableName, String colNames, String condition) throws Exception{
 	// This will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.cj.jdbc.Driver");
@@ -282,6 +362,7 @@ public class MySQLAccess {
               .executeQuery("select " + colNames + " from " + tableName + " where " + condition + ";");
       return resultSet;
   }
+  
   
   private void writeMetaData(ResultSet resultSet) throws SQLException {
     //   Now get some metadata from the database

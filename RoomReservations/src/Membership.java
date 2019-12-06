@@ -13,7 +13,7 @@ public class Membership extends JFrame{
 		JPanel west = new JPanel(new FlowLayout());
 		JPanel south = new JPanel();
 		
-		JTextField jtitle = new JTextField("Join a Student Organization");
+		JLabel jtitle = new JLabel("Join a Student Organization");
 		north.add(jtitle);
 		
 		//this is all of the input, w
