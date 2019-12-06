@@ -71,7 +71,7 @@ public class Event {
 		JLabel div = new JLabel(" / ");
 		JTextField jday = new JTextField(Integer.toString(date.getDay()));
 		JLabel div2 = new JLabel(" / ");
-		JTextField jyear = new JTextField(Integer.toString(date.getYear()));
+		JTextField jyear = new JTextField(Integer.toString(date.getYear() - 100));
 		jmonth.setColumns(2);
 		jday.setColumns(2);
 		jyear.setColumns(5);
@@ -118,7 +118,7 @@ public class Event {
 				MySQLAccess msa = new MySQLAccess();
 				try {
 					msa.updateEvent(eventID, jtitle.getText(), Integer.parseInt(jroom.getText()),
-							new Date(Integer.parseInt(jyear.getText()), Integer.parseInt(jmonth.getText()), Integer.parseInt(jday.getText())),
+							new Date(Integer.parseInt(jyear.getText()) + 100, Integer.parseInt(jmonth.getText()), Integer.parseInt(jday.getText())),
 									new Time(Integer.parseInt(jshour.getText()), Integer.parseInt(jsmin.getText()), 0),
 									new Time(Integer.parseInt(jehour.getText()), Integer.parseInt(jemin.getText()), 0), jdesc.getText());
 				} catch (Exception e1) {
@@ -179,7 +179,7 @@ public class Event {
 		north.add(jtitle);
 		north.add(jroom);
 		
-		JLabel jdate = new JLabel("Date : " + date.getMonth() + "/" + date.getDay() + "/" + date.getYear());
+		JLabel jdate = new JLabel("Date : " + date.getMonth() + "/" + date.getDay() + "/" + (date.getYear() - 100));
 		west.add(jdate);
 		
 		JLabel jstart = new JLabel("Starts: " + start.getHours() + ":" + start.getMinutes());
